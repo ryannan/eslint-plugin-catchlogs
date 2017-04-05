@@ -29,6 +29,10 @@ ruleTester.run("no-catch-log", rule, {
           code: 'var rule = require("./lib/rules/no-catch-log")'
         },
         {
+          code: 'import r1 from "aaa"; var rule = require("rule"); var logger = require("@ali/logger"); try { var a = 1 } catch (e) { logger.info("sss") }',
+          parserOptions: { ecmaVersion: 6, sourceType: "module" }
+        },
+        {
           code: "import r1 from \"../../../lib/rules/no-catch-log\"",
           parserOptions: { ecmaVersion: 6, sourceType: "module" }
         }
@@ -52,7 +56,13 @@ ruleTester.run("no-catch-log", rule, {
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{
                 message: "please add log in the capture statments!"
-                // type: "TryStatement"
+            }]
+        },
+        {
+            code: "var logger = require('@ali/logger'); try { var a = 1 } catch(e) { console.log(e); var b =2; }",
+            parserOptions: { ecmaVersion: 6, sourceType: "module" },
+            errors: [{
+                message: "please add log in the capture statments!"
             }]
         }
     ]
