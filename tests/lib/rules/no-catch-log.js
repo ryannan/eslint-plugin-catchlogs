@@ -29,11 +29,23 @@ ruleTester.run("no-catch-log", rule, {
           code: 'var rule = require("./lib/rules/no-catch-log")'
         },
         {
-          code: 'import r1 from "aaa"; var rule = require("rule"); var logger = require("@ali/logger"); try { var a = 1 } catch (e) { logger.info("sss") }',
+          code: 'import * as r1 from "aaa"; var rule = require("rule"); var logger = require("@ali/logger"); try { var a = 1 } catch (e) { logger.info("sss") }',
           parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-          code: "import r1 from \"../../../lib/rules/no-catch-log\"",
+          code: "import './page.less'",
+          parserOptions: { ecmaVersion: 6, sourceType: "module" }
+        },
+        {
+          code: "import { r2, r4 } from \"../../../lib/rules/no-catch-log\"; import r3 from 'aa'; import './page.less'",
+          parserOptions: { ecmaVersion: 6, sourceType: "module" }
+        },
+        {
+          code: "var logger = require('@ali/logger')('service'); try { var a = 1 } catch(e) { logger.info('sss')}",
+          parserOptions: { ecmaVersion: 6, sourceType: "module" }
+        },
+        {
+          code: "var logger = require('@ali/logger')('service'); try { var a = 1 } catch(e) { logger.info('sss' + e); data = { err: e.message }}; a = 2",
           parserOptions: { ecmaVersion: 6, sourceType: "module" }
         }
     ],
