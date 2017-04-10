@@ -47,6 +47,12 @@ ruleTester.run("no-catch-log", rule, {
         {
           code: "var logger = require('@ali/logger')('service'); try { var a = 1 } catch(e) { logger.info('sss' + e); data = { err: e.message }}; a = 2",
           parserOptions: { ecmaVersion: 6, sourceType: "module" }
+        },
+        {
+          code: "require();"
+        },
+        {
+          code: "try {} finally {}"
         }
     ],
 
